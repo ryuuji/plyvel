@@ -17,13 +17,13 @@ jobs:
       VCPKG_DLL_PATH: "C:/vcpkg/installed/x64-windows/bin"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install snappy and leveldb
       run: |
         vcpkg install snappy --triplet=x64-windows
         vcpkg install leveldb --triplet=x64-windows
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -39,7 +39,7 @@ jobs:
         echo "$((gi .).FullName)"
         cython --cplus --fast-fail --annotate plyvel/_plyvel.pyx
         python setup.py sdist bdist_wheel
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}-${{ matrix.python-version }}
         path: dist/*.whl
