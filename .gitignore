@@ -8,6 +8,8 @@ dist/
 .coverage
 .tox/
 
+.idea/
+
 plyvel/_plyvel.cpp
 plyvel/_plyvel.html
 plyvel/_plyvel*.so

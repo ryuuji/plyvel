@@ -9,11 +9,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: ["3.10","3.11","3.12","3.13"]
+        python-version: ["3.10","3.11","3.12","3.13","3.14"]
         os: [windows-latest]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install snappy
       run: |
         echo "$((gi .).FullName)"
@@ -31,9 +31,10 @@ jobs:
         cmake   --build . --config Release
         cd ..
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        allow-prereleases: true
     - name: Install dependencies
       run: |
         echo "$((gi .).FullName)"
@@ -49,7 +50,7 @@ jobs:
         $env:INCLUDE="$((gi .).FullName)\leveldb\include;$((gi .).FullName)\snappy"
         cython --cplus --fast-fail --annotate plyvel/_plyvel.pyx
         python setup.py sdist bdist_wheel
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}-${{ matrix.python-version }}
         path: dist/*.whl
